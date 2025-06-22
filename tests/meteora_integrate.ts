@@ -122,10 +122,17 @@ describe("meteora_integrate", () => {
       program.programId
     );
 
-    // Create token vault addresses (these will be initialized by the program)
-    // We can't use getAssociatedTokenAddress for PDAs, so we'll create them as regular addresses
-    tokenVault = Keypair.generate().publicKey;
-    usdcVault = Keypair.generate().publicKey;
+    tokenVault = await getAssociatedTokenAddress(
+      mint,
+      vaultAuthority,
+      true 
+    );
+    
+    usdcVault = await getAssociatedTokenAddress(
+      usdcMint,
+      vaultAuthority,
+      true
+    );
   });
 
   it("checks integration", async () => {
